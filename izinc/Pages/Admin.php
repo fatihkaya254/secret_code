@@ -30,7 +30,7 @@ class Admin extends BaseController
 		$this->settings = new SettingsApi();
 		$this->setPages();
 		$this->setSubPages();
-		$this->settings->addPages( $this->pages)->withSubPage('Panel')->addSubPages( $this->subpages)->register();
+		$this->settings->addPages( $this->pages)->withSubPage('Ayarlar')->addSubPages( $this->subpages)->register();
 	}
 
 
@@ -41,7 +41,7 @@ class Admin extends BaseController
 				'menu_title' => 'Secret Code',
 				'capability' => 'delete_private_pages',
 				'menu_slug' => 'secret_code',
-				'callback' => array( $this->callbacks, 'adminDashboard'),
+				'callback' => array( $this->secretCallBack, 'managecoe'),
 				'icon_url' => 'dashicons-editor-removeformatting',
 				'position' => 110
 			)
@@ -53,10 +53,10 @@ class Admin extends BaseController
 			array(
 				'parent_slug' => 'secret_code',
 				'page_title' => 'Admin',
-				'menu_title' => 'admin',
+				'menu_title' => 'Kodlar',
 				'capability' => 'delete_private_pages',
-				'menu_slug' => 'manage_coe',
-				'callback' => array( $this->secretCallBack, 'managecoe'),
+				'menu_slug' => 'manage_secrets',
+				'callback' => array( $this->secretCallBack, 'managesecrets'),
 			),
 		);
 	}

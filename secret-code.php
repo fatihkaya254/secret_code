@@ -47,10 +47,10 @@ include_once plugin_dir_path( __FILE__ )."izinc/Base/Activate.php";
 require_once  plugin_dir_path( __FILE__ )."izinc/Base/Deactivate.php";
 
 //if(class_exists('iz_panel_Activate')){
-$semih = new iz_panel_Activate();
+$semih = new Activate();
 //}
 
-register_activation_hook( __FILE__ , array( $semih, 'iz_activate' ) );
+register_activation_hook( __FILE__ , array( 'Activate', 'activate' ) );
 register_deactivation_hook( __FILE__ , array( 'Deactivate', 'deactivate' ) );
 
 //if ( class_exists('\inc\Init')){

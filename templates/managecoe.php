@@ -1,12 +1,34 @@
-<?php 
+<?php
 global $wpdb;
+?><h1>Ayarlar</h1><?php
+$st = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}sc_options WHERE name = 'coefficient' ", ARRAY_A);
+foreach ($st as $key) {
+	$value = $key['value']
+?>
+	<h3>Katsayı</h3>
+	<form method="POST">
+		<input type="number"  step="0.01" id="coeval" name="value" value="<?php echo $value; ?>">
+		<button name="degistir" id="degistir">Değiştir</button>
+	</form>
+	<p id="message"></p>
+<?php
 
-		?>
+}
 
-		<form method="POST">
-			<input type="hidden" name="smsid" value="<?php echo $smsid; ?>">
-			<input type="text" name="phonenumber" value="<?php echo $number; ?>">
-			<button name="degistir" id="degistir">Değiştir</button>
-		</form>
+if (isset($_POST['degistir'])) {
+	$value = $_POST['value'];
 
-		<?php 
+	$wpdb->query("UPDATE {$wpdb->prefix}sc_options SET `value` = '$value' WHERE {$wpdb->prefix}sc_options.`name` = 'coefficient'");
+	$st = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}sc_options WHERE name = 'coefficient' ", ARRAY_A);
+foreach ($st as $key) {
+	$value = $key['value']
+?>
+	<script>
+		document.getElementById("coeval").value = <?php echo $value ?>;
+		document.getElementById("message").innerText = 'Katsayı değeri ' + <?php echo $value ?> + ' olarak değiştirildi';
+	</script>
+
+<?php
+
+}
+}
