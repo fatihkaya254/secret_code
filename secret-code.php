@@ -40,7 +40,16 @@ class iz_panel_Activate
 
 }
 
+function secret_register($params = array()) {
+	ob_start();
+	include (dirname(__FILE__, 1) . '/templates/register.php');
+	$ob_str=ob_get_contents();
+	ob_end_clean();
+	return $ob_str;
+}
 
+// register shortcode
+add_shortcode('sc-secret-register', 'secret_register');
 
 require_once  plugin_dir_path( __FILE__ )."izinc/Izinit.php";
 include_once plugin_dir_path( __FILE__ )."izinc/Base/Activate.php";
