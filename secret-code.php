@@ -7,7 +7,7 @@
 Plugin Name: Secret Code
 Plugin URI: https://isleyenzihinler.com.tr
 Description: Görüşme programını düzenlemek için oluşturulmuştur.
-Version: 1.0.7
+Version: 1.0.8
 Author: Fatih Kaya
 Author URI: https://isleyenzihinler.com.tr
 License: GNU

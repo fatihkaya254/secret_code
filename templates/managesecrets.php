@@ -173,7 +173,7 @@ global $wpdb;
         justify-content: center;
         width: 25%;
         height: 18px;
-        overflow-x: scroll;
+        overflow-x: initial;
         overflow-y: hidden;
         padding: 3px;
     }
@@ -186,7 +186,7 @@ global $wpdb;
         justify-content: center;
         width: 25%;
         height: 18px;
-        overflow-x: scroll;
+        overflow-x: initial;
         overflow-y: hidden;
         padding: 3px;
         background-color: rgb(242, 242, 247);
