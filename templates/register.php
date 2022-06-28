@@ -98,8 +98,8 @@ function complete_registration()
         );
         $user = wp_insert_user($userdata);
         $wpdb->query("UPDATE {$wpdb->prefix}sc_secret_codes SET  `user_id` = '$user' WHERE `secret_code`= '$secret_code'");
-        auth_redirect();
         echo 'Kayıt tamamlandı. <a href="' . get_site_url() . '/wp-login.php">Giriş Sayfası</a>.';
+        auth_redirect();
     }
 }
 
