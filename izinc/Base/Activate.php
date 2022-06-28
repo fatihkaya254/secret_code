@@ -61,7 +61,7 @@ class Activate
 
       $wpdb->query("
 
-  INSERT INTO `{$wpdb->prefix}sc_options` (`option`, `value`) VALUES
+  INSERT INTO `{$wpdb->prefix}sc_options` (`name`, `value`) VALUES
   ('coefficient', '1')
   ");
     }

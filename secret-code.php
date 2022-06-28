@@ -70,7 +70,7 @@ require_once  plugin_dir_path( __FILE__ )."izinc/Base/Deactivate.php";
 $semih = new Activate();
 //}
 
-register_activation_hook( __FILE__ , array( 'Activate', 'activate' ) );
+register_activation_hook( __FILE__ , array( 'Activate', '__activate' ) );
 register_deactivation_hook( __FILE__ , array( 'Deactivate', 'deactivate' ) );
 
 //if ( class_exists('\inc\Init')){
