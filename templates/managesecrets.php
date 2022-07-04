@@ -1,9 +1,9 @@
 <?php
 global $wpdb;
 ?><h1>Kodlar</h1><?php
-                    $query = "SELECT {$wpdb->prefix}sc_secret_codes.id secretID, secret_code, value, user_email, {$wpdb->prefix}users.ID userID ";
+                    $query = "SELECT {$wpdb->prefix}sc_secret_codes.id secretID, secret_code, value, phone, {$wpdb->prefix}sc_users.user_id userID ";
                     $query .= "FROM {$wpdb->prefix}sc_secret_codes";
-                    $query .= " LEFT JOIN {$wpdb->prefix}users ON {$wpdb->prefix}sc_secret_codes.`user_id` = {$wpdb->prefix}users.`ID`";
+                    $query .= " LEFT JOIN {$wpdb->prefix}sc_users ON {$wpdb->prefix}sc_secret_codes.`user_id` = {$wpdb->prefix}sc_users.`user_id`";
                     $st = $wpdb->get_results($query, ARRAY_A);
                     ?>
 <div class="sc_container">
@@ -11,7 +11,7 @@ global $wpdb;
         <input type="text" name="secretId" id="secretId" style="display: none;" placeholder="ID" readonly>
         <input type="text" name="code" id="code" required="true" placeholder="Kod" minlength="12" maxlength="12">
         <input type="number" name="value" id="value" required="true" placeholder="Değer">
-        <input type="email" name="email" id="email" style="display: none;" placeholder="Kullanıcı E-posta">
+        <input type="text" name="phone" id="phone" maxlength="11" style="display: none;" placeholder="Telefon">
         <button name="add" id="add">Ekle</button>
         <button type="submit" name="change" style="display: none;" id="change">Düzenle</button>
         <div class="sc_cancel" name="cancel" style="display: none;" id="cancel" onclick="cancel()"> x </div>
@@ -37,9 +37,9 @@ global $wpdb;
         $lastId = $id;
         $secretCode = $key['secret_code'];
         $value = $key['value'];
-        $mail = $key['user_email'];
+        $phone = $key['phone'];
     ?>
-        <div class="sc_row" id="row<?php echo $id ?>" onclick="rowClick(`<?php echo $id ?>`, `<?php echo $secretCode ?>`,`<?php echo $value ?>`,`<?php echo $mail ?>`)">
+        <div class="sc_row" id="row<?php echo $id ?>" onclick="rowClick(`<?php echo $id ?>`, `<?php echo $secretCode ?>`,`<?php echo $value ?>`,`<?php echo $phone ?>`)">
             <div class="sc_cell">
                 <span id="cellId<?php echo $id ?>"><?php echo $id ?></span>
             </div>
@@ -50,7 +50,7 @@ global $wpdb;
                 <span id="cellvalue<?php echo $id ?>"><?php echo $value ?></span>
             </div>
             <div class="sc_cell">
-                <span id="cellMail<?php echo $id ?>"><?php echo $mail ?></span>
+                <span id="cellPhone<?php echo $id ?>"><?php echo $phone ?></span>
             </div>
         </div>
         <?php
@@ -61,19 +61,19 @@ global $wpdb;
         $value = $_POST['value'];
 
         $wpdb->query("INSERT INTO {$wpdb->prefix}sc_secret_codes (`secret_code`, `value`) VALUES ('$secretCode', '$value')");
-        $query = "SELECT {$wpdb->prefix}sc_secret_codes.id secretID, secret_code, value, user_email, {$wpdb->prefix}users.ID userID ";
+        $query = "SELECT {$wpdb->prefix}sc_secret_codes.id secretID, secret_code, value, phone, {$wpdb->prefix}sc_users.user_id userID ";
         $query .= "FROM {$wpdb->prefix}sc_secret_codes";
-        $query .= " LEFT JOIN {$wpdb->prefix}users ON {$wpdb->prefix}sc_secret_codes.`user_id` = {$wpdb->prefix}users.`ID` ORDER BY {$wpdb->prefix}sc_secret_codes.`id` DESC LIMIT 1";
+        $query .= " LEFT JOIN {$wpdb->prefix}sc_users ON {$wpdb->prefix}sc_secret_codes.`user_id` = {$wpdb->prefix}sc_users.`user_id` ORDER BY {$wpdb->prefix}sc_secret_codes.`id` DESC LIMIT 1";
         $newline = $wpdb->get_results($query, ARRAY_A);
         foreach ($newline as $key) {
             $id = $key['secretID'];
             $secretCode = $key['secret_code'];
             $value = $key['value'];
-            $mail = '';
-            $mail = $key['user_email'];
+            $phone = '';
+            $phone = $key['phone'];
             if ($id != $lastId) {
         ?>
-                <div class="sc_row" id="row<?php echo $id ?>" onclick="rowClick(`<?php echo $id ?>`, `<?php echo $secretCode ?>`,`<?php echo $value ?>`,`<?php echo $mail ?>`)">
+                <div class="sc_row" id="row<?php echo $id ?>" onclick="rowClick(`<?php echo $id ?>`, `<?php echo $secretCode ?>`,`<?php echo $value ?>`,`<?php echo $phone ?>`)">
                     <div class="sc_cell">
                         <span id="cellId<?php echo $id ?>"><?php echo $id ?></span>
                     </div>
@@ -84,7 +84,7 @@ global $wpdb;
                         <span id="cellvalue<?php echo $id ?>"><?php echo $value ?></span>
                     </div>
                     <div class="sc_cell">
-                        <span id="cellMail<?php echo $id ?>"><?php echo $mail ?></span>
+                        <span id="cellPhone<?php echo $id ?>"><?php echo $phone ?></span>
                     </div>
                 </div>
             <?php
@@ -96,33 +96,33 @@ global $wpdb;
         $value = $_POST['value'];
         $id = $_POST['secretId'];
         $userId = NULL;
-        if (isset($_POST['email'])) {
-            $email = $_POST['email'];
-            $query = ("SELECT `ID` FROM {$wpdb->prefix}users WHERE `user_email`= '$email'");
+        if (isset($_POST['phone'])) {
+            $phone = $_POST['phone'];
+            $query = ("SELECT `user_id` FROM {$wpdb->prefix}sc_users WHERE `phone`= '$phone'");
             $who = $wpdb->get_results($query, ARRAY_A);
             foreach ($who as $k) {
-                $userId = $k['ID'];
+                $userId = $k['user_id'];
             }
         }
          if(!$userId || $userId == '' || $userId == 0 ) $wpdb->query("UPDATE {$wpdb->prefix}sc_secret_codes SET `value`= '$value', `secret_code` = '$secretCode', `user_id` = NULL WHERE `id`= $id");
          else $wpdb->query("UPDATE {$wpdb->prefix}sc_secret_codes SET `value`= '$value', `secret_code` = '$secretCode', `user_id` = '$userId' WHERE `id`= $id");
-        $query = "SELECT {$wpdb->prefix}sc_secret_codes.id secretID, secret_code, value, user_email, {$wpdb->prefix}users.ID userID ";
+        $query = "SELECT {$wpdb->prefix}sc_secret_codes.id secretID, secret_code, value, phone, {$wpdb->prefix}sc_users.user_id userID ";
         $query .= "FROM {$wpdb->prefix}sc_secret_codes";
-        $query .= " LEFT JOIN {$wpdb->prefix}users ON {$wpdb->prefix}sc_secret_codes.`user_id` = {$wpdb->prefix}users.`ID` WHERE {$wpdb->prefix}sc_secret_codes.`id` = $id";
+        $query .= " LEFT JOIN {$wpdb->prefix}sc_users ON {$wpdb->prefix}sc_secret_codes.`user_id` = {$wpdb->prefix}sc_users.`user_id` WHERE {$wpdb->prefix}sc_secret_codes.`id` = $id";
         $newline = $wpdb->get_results($query, ARRAY_A);
         foreach ($newline as $key) {
             $id = $key['secretID'];
             $secretCode = $key['secret_code'];
             $value = $key['value'];
-            $mail = '';
-            $mail = $key['user_email'];
+            $phone = '';
+            $phone = $key['phone'];
             if ($id != $lastId) {
             ?>
                 <script>
                     document.getElementById("cellId<?php echo $id ?>").innerText = '<?php echo $id ?>';
                     document.getElementById("cellCode<?php echo $id ?>").innerText = '<?php echo $secretCode ?>';
                     document.getElementById("cellvalue<?php echo $id ?>").innerText = '<?php echo $value ?>';
-                    document.getElementById("cellMail<?php echo $id ?>").innerText = '<?php echo $mail ?>';
+                    document.getElementById("cellPhone<?php echo $id ?>").innerText = '<?php echo $phone ?>';
 
                 </script>
     <?php
@@ -225,8 +225,8 @@ global $wpdb;
         document.getElementById("secretId").value = id;
         document.getElementById("code").value = sc;
         document.getElementById("value").value = v;
-        document.getElementById("email").value = m;
-        document.getElementById("email").style.display = "inline";
+        document.getElementById("phone").value = m;
+        document.getElementById("phone").style.display = "inline";
         document.getElementById("secretId").style.display = "inline";
         document.getElementById("add").style.display = "none";
         document.getElementById("cancel").style.display = "inline";
@@ -238,12 +238,41 @@ global $wpdb;
         document.getElementById("secretId").value = '';
         document.getElementById("code").value = '';
         document.getElementById("value").value = '0';
-        document.getElementById("email").value = '';
-        document.getElementById("email").style.display = "none";
+        document.getElementById("phone").value = '';
+        document.getElementById("phone").style.display = "none";
         document.getElementById("secretId").style.display = "none";
         document.getElementById("add").style.display = "inline";
         document.getElementById("cancel").style.display = "none";
         document.getElementById("change").style.display = "none";
     }
+    function setInputFilter(textbox, inputFilter, errMsg) {
+        ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop", "focusout"].forEach(function(event) {
+          textbox.addEventListener(event, function(e) {
+            if (inputFilter(this.value)) {
+              // Accepted value
+              if (["keydown","mousedown","focusout"].indexOf(e.type) >= 0){
+                this.classList.remove("input-error");
+                this.setCustomValidity("");
+              }
+              this.oldValue = this.value;
+              this.oldSelectionStart = this.selectionStart;
+              this.oldSelectionEnd = this.selectionEnd;
+            } else if (this.hasOwnProperty("oldValue")) {
+              // Rejected value - restore the previous one
+              this.classList.add("input-error");
+              this.setCustomValidity(errMsg);
+              this.reportValidity();
+              this.value = this.oldValue;
+              this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+            } else {
+              // Rejected value - nothing to restore
+              this.value = "";
+            }
+          });
+        });
+      }
+      setInputFilter(document.getElementById("phone"), function(value) {
+        return /^-?\d*$/.test(value); }, "Sadece Sayısal Değerler Kabul Edilir");
+
 </script>
 <?php
