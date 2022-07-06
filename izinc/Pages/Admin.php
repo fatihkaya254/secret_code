@@ -58,6 +58,15 @@ class Admin extends BaseController
 				'menu_slug' => 'manage_secrets',
 				'callback' => array( $this->secretCallBack, 'managesecrets'),
 			),
+			array(
+				'parent_slug' => 'secret_code',
+				'page_title' => 'Admin',
+				'menu_title' => 'İstekler',
+				'capability' => 'delete_private_pages',
+				'menu_slug' => 'requests',
+				'callback' => array( $this->secretCallBack, 'requests'),
+			),
 		);
 	}
+	
 }

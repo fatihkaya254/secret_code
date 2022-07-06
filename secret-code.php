@@ -62,6 +62,17 @@ function show_value($params = array()) {
 // register shortcode
 add_shortcode('sc-show-value', 'show_value');
 
+function user_history($params = array()) {
+	ob_start();
+	include (dirname(__FILE__, 1) . '/templates/history.php');
+	$ob_str=ob_get_contents();
+	ob_end_clean();
+	return $ob_str;
+}
+
+// register shortcode
+add_shortcode('sc-user-history', 'user_history');
+
 require_once  plugin_dir_path( __FILE__ )."izinc/Izinit.php";
 include_once plugin_dir_path( __FILE__ )."izinc/Base/Activate.php";
 require_once  plugin_dir_path( __FILE__ )."izinc/Base/Deactivate.php";

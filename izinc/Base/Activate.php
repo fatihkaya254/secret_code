@@ -97,6 +97,17 @@ class Activate
           PRIMARY KEY (`id`)) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
       ");
     }
+    $query5 = $wpdb->prepare('SHOW TABLES LIKE %s', $wpdb->esc_like($wpdb->prefix . 'sc_user_history'));
+    if ($wpdb->get_var($query5) !=  $wpdb->prefix . 'sc_user_history') {
+      $wpdb->query("    
+        CREATE TABLE `{$wpdb->prefix}sc_user_history` ( 
+          `id` BIGINT(20) NOT NULL AUTO_INCREMENT , 
+          `user_id` BIGINT(20) NOT NULL , 
+          `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , 
+          `value` INT(11) NOT NULL , 
+          PRIMARY KEY (`id`)) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+      ");
+    }
     flush_rewrite_rules();
   }
 }

@@ -16,4 +16,8 @@ class SecretCallBacks extends BaseController
 	{
 		return require_once("$this->plugin_path/templates/managesecrets.php");
 	}
+	public function requests()
+	{
+		return require_once("$this->plugin_path/templates/requests.php");
+	}
 }
