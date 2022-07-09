@@ -116,7 +116,7 @@ function complete_registration()
         $wpdb->query("UPDATE {$wpdb->prefix}sc_secret_codes SET  `user_id` = '$user' WHERE `secret_code`= '$secret_code'");
         $wpdb->query("INSERT INTO `{$wpdb->prefix}sc_users` (`phone`, `adress`, `user_id`) VALUES ('$phone', '$adress', '$user')");
       echo 'Kayıt tamamlandı. <a href="' . get_site_url() . '/wp-login.php">Giriş Sayfası</a>.';
-        //auth_redirect();
+        auth_redirect();
     }
 }
 

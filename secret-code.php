@@ -5,13 +5,13 @@
 */
 /*
 Plugin Name: Secret Code
-Plugin URI: https://isleyenzihinler.com.tr
-Description: Görüşme programını düzenlemek için oluşturulmuştur.
-Version: 1.1.0
+Plugin URI: https://github.com/fatihkaya254
+Description: Bağlantı yönetimi eklentisi.
+Version: 1.1.3
 Author: Fatih Kaya
-Author URI: https://isleyenzihinler.com.tr
+Author URI: https://github.com/fatihkaya254
 License: GNU
-Text Domain: meeting-parents
+Text Domain: secret-code
 */
 
 

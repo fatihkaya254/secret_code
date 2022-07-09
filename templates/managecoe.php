@@ -6,7 +6,7 @@ $lim = new Limit;
 ?>
 	<h3>Katsayı</h3>
 	<form method="POST">
-		<input type="number"  step="0.01" id="coeval" name="value" value="<?php echo $lim->coe; ?>">
+		<input type="number"  step="0.0001" id="coeval" name="value" value="<?php echo $lim->coe; ?>">
 		<button name="degistir" id="degistir">Değiştir</button>
 	</form>
 	<p id="message"></p>

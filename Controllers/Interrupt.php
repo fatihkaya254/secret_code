@@ -29,7 +29,7 @@ class Interrupt extends Limit
     }
     public function get_history($user){
         global $wpdb;
-        $history = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}sc_user_history WHERE `user_id` != '$user'", ARRAY_A);
+        $history = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}sc_user_history WHERE `user_id` == '$user'", ARRAY_A);
         return $history;
     }
 }
