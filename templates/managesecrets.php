@@ -27,13 +27,27 @@ global $wpdb;
             <span>Değer</span>
         </div>
         <div class="sc_title_cell">
+            <span>Telefon</span>
+        </div>
+        <div class="sc_title_cell">
             <span>Kullanıcı</span>
         </div>
     </div>
     <?php
     $lastId = 0;
+    function user_id_exists($user){
+
+        global $wpdb;
+    
+        $count = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $wpdb->users WHERE ID = %d", $user));
+    
+        if($count == 1){ return true; }else{ return false; }
+    
+    }
     foreach ($st as $key) {
         $id = $key['secretID'];
+        $this_user = "";
+        if(user_id_exists($key['userID'])) $this_user = get_user_by( 'id', $key['userID'] )-> user_login;
         $lastId = $id;
         $secretCode = $key['secret_code'];
         $value = $key['value'];
@@ -51,6 +65,9 @@ global $wpdb;
             </div>
             <div class="sc_cell">
                 <span id="cellPhone<?php echo $id ?>"><?php echo $phone ?></span>
+            </div>
+            <div class="sc_cell">
+                <span id="cellPhone<?php echo $id ?>"><?php echo $this_user ?></span>
             </div>
         </div>
         <?php

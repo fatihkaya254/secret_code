@@ -6,7 +6,7 @@
 
 class Activate
 {
-  public function __activate()
+  public static function __activate()
   {
     global $wpdb;
     $query = $wpdb->prepare('SHOW TABLES LIKE %s', $wpdb->esc_like($wpdb->prefix . 'sc_secret_codes'));
@@ -45,7 +45,7 @@ class Activate
         CREATE TABLE `{$wpdb->prefix}sc_options` (
           `id` bigint(20) NOT NULL,
           `name` varchar(40) COLLATE utf8_turkish_ci NOT NULL,
-          `value` varchar(40) COLLATE utf8_turkish_ci NOT NULL
+          `value` varchar(255) COLLATE utf8_turkish_ci NOT NULL
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
       ");
 
@@ -61,6 +61,7 @@ class Activate
 
       $wpdb->query("INSERT INTO `{$wpdb->prefix}sc_options` (`name`, `value`) VALUES ('coefficient', '1')");
       $wpdb->query("INSERT INTO `{$wpdb->prefix}sc_options` (`name`, `value`) VALUES ('limit', '900')");
+      $wpdb->query("INSERT INTO `{$wpdb->prefix}sc_options` (`name`, `value`) VALUES ('notice', 'Duyuruları buradan takip edebilirsiniz')");
     }
     $query3 = $wpdb->prepare('SHOW TABLES LIKE %s', $wpdb->esc_like($wpdb->prefix . 'sc_users'));
     if ($wpdb->get_var($query3) !=  $wpdb->prefix . 'sc_users') {

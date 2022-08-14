@@ -5,3 +5,8 @@
 */
 
 
+class Deactivate
+{
+  public static function __deactivate()
+  {}
+}

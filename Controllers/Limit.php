@@ -6,17 +6,21 @@ class Limit
     private $wpdb;
     public $limit = 0;
     public $coe = 0;
+    public $notice = '';
     public function __construct()
     {
         global $wpdb;
         $this->wpdb = $wpdb;
-        $st = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}sc_options WHERE name = 'coefficient' OR name = 'limit' ", ARRAY_A);
+        $st = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}sc_options ", ARRAY_A);
         foreach ($st as $key) {
             if ($key['name'] == 'coefficient') {
                 $this->coe = $key['value'];
             }
             if ($key['name'] == 'limit') {
                 $this->limit = $key['value'];
+            }
+            if ($key['name'] == 'notice') {
+                $this->notice = $key['value'];
             }
         }
     }

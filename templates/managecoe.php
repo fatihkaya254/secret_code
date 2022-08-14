@@ -17,6 +17,14 @@ $lim = new Limit;
 		<button name="degistirL" id="degistirL">Değiştir</button>
 	</form>
 	<p id="messageL"></p>
+
+	<h3>Duyuru</h3>
+	<form method="POST" id="noticeform">
+		<textarea  maxlength="255" rows="4" cols="150" id="notice" name="notice" form="noticeform"><?php echo $lim->notice; ?></textarea>
+		<br>
+		<button name="degistirN" id="degistirN">Değiştir</button>
+	</form>
+	<p id="messageN"></p>
 <?php
 
 if (isset($_POST['degistir'])) {
@@ -39,3 +47,13 @@ if (isset($_POST['degistirL'])) {
 <?php
 }
 
+
+if (isset($_POST['degistirN'])) {
+	$notice = $lim->change_value('notice', $_POST['notice']);
+	?>
+	<script>
+		document.getElementById("messageN").innerText = 'Duyuru; "' + `<?php echo $notice ?>` + '" olarak değiştirildi';
+		document.getElementById("notice").value = `<?php echo $notice ?>`;
+	</script>
+<?php
+}

@@ -73,6 +73,17 @@ function user_history($params = array()) {
 // register shortcode
 add_shortcode('sc-user-history', 'user_history');
 
+function user_page($params = array()) {
+	ob_start();
+	include (dirname(__FILE__, 1) . '/templates/userpage.php');
+	$ob_str=ob_get_contents();
+	ob_end_clean();
+	return $ob_str;
+}
+
+// register shortcode
+add_shortcode('sc-user-page', 'user_page');
+
 require_once  plugin_dir_path( __FILE__ )."izinc/Izinit.php";
 include_once plugin_dir_path( __FILE__ )."izinc/Base/Activate.php";
 require_once  plugin_dir_path( __FILE__ )."izinc/Base/Deactivate.php";
@@ -82,7 +93,7 @@ $semih = new Activate();
 //}
 
 register_activation_hook( __FILE__ , array( 'Activate', '__activate' ) );
-register_deactivation_hook( __FILE__ , array( 'Deactivate', 'deactivate' ) );
+//register_deactivation_hook( __FILE__ , array( 'Deactivate', '__deactivate' ) );
 
 //if ( class_exists('\inc\Init')){
 Izinit::register_services();
