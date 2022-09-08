@@ -139,21 +139,9 @@ function custom_registration_function()
         $adress  =   sanitize_text_field($_POST['adress']);
         $secret_code  =   sanitize_text_field($_POST['scode']);
         
-        $queryP = "SELECT phone FROM {$wpdb->prefix}sc_users WHERE `phone` = '$phone'";
-        $newlineP = $wpdb->get_results($queryP, ARRAY_A);
-        if (count($newlineP)) {
-            $reg_errors->add('scode', 'Telefon numarası başka kullanıcıya tanımlanmış');
-            foreach ($reg_errors->get_error_messages() as $error) {
-
-                echo '<div>';
-                echo '<strong>HATA</strong>: ';
-                echo $error . '<br/>';
-                echo '</div>';
-            }
-        } 
         $query = "SELECT secret_code FROM {$wpdb->prefix}sc_secret_codes WHERE `secret_code` = '$secret_code' AND `user_id` is NULL";
         $newline = $wpdb->get_results($query, ARRAY_A);
-            if (count($newline) && !count($newlineP)) {
+            if (count($newline)) {
                 // call @function complete_registration to create the user
                 // only when no WP_error is found
                 complete_registration(
