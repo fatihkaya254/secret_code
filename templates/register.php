@@ -33,7 +33,7 @@ function registration_form($username, $password, $phone, $adress, $secret_code)
 
     <div>
     <label for="adress">Adres <strong>*</strong></label><br>
-    <input required  maxlength="50" type="text" name="adress" value="' . (isset($_POST['adress']) ? $adress : null) . '">
+    <input maxlength="50" type="text" name="adress" value="' . (isset($_POST['adress']) ? $adress : null) . '">
     </div>
 
     <div>

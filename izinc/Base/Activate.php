@@ -77,7 +77,6 @@ class Activate
       $wpdb->query("
       ALTER TABLE `{$wpdb->prefix}sc_users`
       ADD PRIMARY KEY (`id`),
-      ADD UNIQUE KEY `phone` (`phone`),
       ADD UNIQUE KEY `user_id` (`user_id`);
       ");
       $wpdb->query("

@@ -85,7 +85,7 @@ foreach ($st as $key) {
   <h5>Telefon Numarası: <?php echo $phone ?></h5>
   <form method="POST">
     <div class="form">
-      <input required maxlength="50" type="text" name="adress" id="adress" value="<?php echo $adress ?>">
+      <input required maxlength="50" type="text" name="adress" id="adress" placeholder="Adres" value="<?php echo $adress ?>">
       <button name="degistira" id="degistira">Değiştir</button>
     </div>
   </form>
