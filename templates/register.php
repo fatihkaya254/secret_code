@@ -31,10 +31,7 @@ function registration_form($username, $password, $phone, $adress, $secret_code)
     <input required minlength="10" maxlength="11" id="phone" type="text" name="phone" value="' . (isset($_POST['phone']) ? $phone : null) . '">
     </div>
 
-    <div>
-    <label for="adress">Adres <strong>*</strong></label><br>
-    <input maxlength="50" type="text" name="adress" value="' . (isset($_POST['adress']) ? $adress : null) . '">
-    </div>
+
 
     <div>
     <label for="scode">Özel Kod <strong>*</strong></label><br>
@@ -179,4 +176,9 @@ function custom_registration_function()
 
 echo custom_registration_function();
 
+//silinen adres giriş etiketi
+//<div>
+//<label for="adress">Adres <strong>*</strong></label><br>
+//<input maxlength="50" type="text" name="adress" value="' . (isset($_POST['adress']) ? $adress : null) . '">
+//</div>
 ?>
